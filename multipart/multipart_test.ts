@@ -7,7 +7,7 @@ import {
   assertThrows,
   assertThrowsAsync
 } from "../testing/asserts.ts";
-import { test } from "../testing/mod.ts";
+import { test, runIfMain } from "../testing/mod.ts";
 import {
   matchAfterPrefix,
   MultipartReader,
@@ -211,3 +211,5 @@ test(async function multipartMultipartReader2(): Promise<void> {
     await remove(file.tempfile);
   }
 });
+
+runIfMain(import.meta);
