@@ -1,6 +1,6 @@
-import zlib_deflate from "./zlib/deflate.js";
-import utils        from "./utils/common.js";
-import strings      from "./utils/strings.js";
+import * as zlib_deflate from "./zlib/deflate.js";
+import * as utils   from "./utils/common.js";
+import * as strings from "./utils/strings.js";
 import msg          from "./zlib/messages.js";
 import ZStream      from "./zlib/zstream.js";
 
@@ -391,7 +391,13 @@ function gzip(input, options) {
 }
 
 
-exports.Deflate = Deflate;
-exports.deflate = deflate;
-exports.deflateRaw = deflateRaw;
-exports.gzip = gzip;
+export {
+  Deflate,
+  deflate,
+  deflateRaw,
+  gzip
+}
+// exports.Deflate = Deflate;
+// exports.deflate = deflate;
+// exports.deflateRaw = deflateRaw;
+// exports.gzip = gzip;

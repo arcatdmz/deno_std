@@ -17,7 +17,7 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-import utils         from "../utils/common.js";
+import * as utils    from "../utils/common.js";
 import adler32       from "./adler32.js";
 import crc32         from "./crc32.js";
 import inflate_fast  from "./inffast.js";
@@ -1532,16 +1532,29 @@ function inflateSetDictionary(strm, dictionary) {
   return Z_OK;
 }
 
-exports.inflateReset = inflateReset;
-exports.inflateReset2 = inflateReset2;
-exports.inflateResetKeep = inflateResetKeep;
-exports.inflateInit = inflateInit;
-exports.inflateInit2 = inflateInit2;
-exports.inflate = inflate;
-exports.inflateEnd = inflateEnd;
-exports.inflateGetHeader = inflateGetHeader;
-exports.inflateSetDictionary = inflateSetDictionary;
-exports.inflateInfo = 'pako inflate (from Nodeca project)';
+const inflateInfo = 'pako inflate (from Nodeca project)';
+export {
+  inflateReset,
+  inflateReset2,
+  inflateResetKeep,
+  inflateInit,
+  inflateInit2,
+  inflate,
+  inflateEnd,
+  inflateGetHeader,
+  inflateSetDictionary,
+  inflateInfo
+};
+// exports.inflateReset = inflateReset;
+// exports.inflateReset2 = inflateReset2;
+// exports.inflateResetKeep = inflateResetKeep;
+// exports.inflateInit = inflateInit;
+// exports.inflateInit2 = inflateInit2;
+// exports.inflate = inflate;
+// exports.inflateEnd = inflateEnd;
+// exports.inflateGetHeader = inflateGetHeader;
+// exports.inflateSetDictionary = inflateSetDictionary;
+// exports.inflateInfo = 'pako inflate (from Nodeca project)';
 
 /* Not implemented
 exports.inflateCopy = inflateCopy;

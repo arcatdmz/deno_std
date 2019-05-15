@@ -54,4 +54,4 @@ function crc32(crc, buf, len, pos) {
 }
 
 
-module.exports = crc32;
+export default crc32;

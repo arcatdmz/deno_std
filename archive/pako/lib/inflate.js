@@ -1,6 +1,6 @@
-import zlib_inflate from "./zlib/inflate.js";
-import utils        from "./utils/common.js";
-import strings      from "./utils/strings.js";
+import * as zlib_inflate from "./zlib/inflate.js";
+import * as utils   from "./utils/common.js";
+import * as strings from "./utils/strings.js";
 import c            from "./zlib/constants.js";
 import msg          from "./zlib/messages.js";
 import ZStream      from "./zlib/zstream.js";
@@ -414,7 +414,14 @@ function inflateRaw(input, options) {
  **/
 
 
-exports.Inflate = Inflate;
-exports.inflate = inflate;
-exports.inflateRaw = inflateRaw;
-exports.ungzip  = inflate;
+ const ungzip = inflate;
+ export {
+   Inflate,
+   inflate,
+   inflateRaw,
+   ungzip
+ }
+// exports.Inflate = Inflate;
+// exports.inflate = inflate;
+// exports.inflateRaw = inflateRaw;
+// exports.ungzip  = inflate;

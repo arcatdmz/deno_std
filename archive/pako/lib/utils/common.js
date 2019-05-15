@@ -1,12 +1,12 @@
-var TYPED_OK =  (typeof Uint8Array !== 'undefined') &&
-                (typeof Uint16Array !== 'undefined') &&
-                (typeof Int32Array !== 'undefined');
+// var TYPED_OK =  (typeof Uint8Array !== 'undefined') &&
+//                 (typeof Uint16Array !== 'undefined') &&
+//                 (typeof Int32Array !== 'undefined');
 
 function _has(obj, key) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
-exports.assign = function (obj /*from1, from2, from3, ...*/) {
+const assign = function (obj /*from1, from2, from3, ...*/) {
   var sources = Array.prototype.slice.call(arguments, 1);
   while (sources.length) {
     var source = sources.shift();
@@ -28,7 +28,7 @@ exports.assign = function (obj /*from1, from2, from3, ...*/) {
 
 
 // reduce buffer size, avoiding mem copy
-exports.shrinkBuf = function (buf, size) {
+const shrinkBuf = function (buf, size) {
   if (buf.length === size) { return buf; }
   if (buf.subarray) { return buf.subarray(0, size); }
   buf.length = size;
@@ -70,33 +70,37 @@ var fnTyped = {
   }
 };
 
-var fnUntyped = {
-  arraySet: function (dest, src, src_offs, len, dest_offs) {
-    for (var i = 0; i < len; i++) {
-      dest[dest_offs + i] = src[src_offs + i];
-    }
-  },
-  // Join array of chunks to single array.
-  flattenChunks: function (chunks) {
-    return [].concat.apply([], chunks);
-  }
-};
+// var fnUntyped = {
+//   arraySet: function (dest, src, src_offs, len, dest_offs) {
+//     for (var i = 0; i < len; i++) {
+//       dest[dest_offs + i] = src[src_offs + i];
+//     }
+//   },
+//   // Join array of chunks to single array.
+//   flattenChunks: function (chunks) {
+//     return [].concat.apply([], chunks);
+//   }
+// };
 
 
-// Enable/Disable typed arrays use, for testing
-//
-exports.setTyped = function (on) {
-  if (on) {
-    exports.Buf8  = Uint8Array;
-    exports.Buf16 = Uint16Array;
-    exports.Buf32 = Int32Array;
-    exports.assign(exports, fnTyped);
-  } else {
-    exports.Buf8  = Array;
-    exports.Buf16 = Array;
-    exports.Buf32 = Array;
-    exports.assign(exports, fnUntyped);
-  }
-};
+// // Enable/Disable typed arrays use, for testing
+// //
+// const setTyped = function (on) {
+//   if (on) {
+//     const Buf8  = Uint8Array;
+//     const Buf16 = Uint16Array;
+//     const Buf32 = Int32Array;
+//     const assign(exports, fnTyped);
+//   } else {
+//     const Buf8  = Array;
+//     const Buf16 = Array;
+//     const Buf32 = Array;
+//     const assign(exports, fnUntyped);
+//   }
+// };
 
-exports.setTyped(TYPED_OK);
+// const setTyped(TYPED_OK);
+
+const { arraySet, flattenChunks } = fnTyped;
+const Buf8 = Uint8Array, Buf16 = Uint16Array, Buf32 = Int32Array;
+export { assign, shrinkBuf, arraySet, flattenChunks, Buf8, Buf16, Buf32 };

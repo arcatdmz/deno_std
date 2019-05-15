@@ -19,7 +19,7 @@
 
 /* eslint-disable space-unary-ops */
 
-import utils from "../utils/common.js";
+import * as utils from "../utils/common.js";
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -1213,8 +1213,15 @@ function _tr_tally(s, dist, lc)
    */
 }
 
-exports._tr_init  = _tr_init;
-exports._tr_stored_block = _tr_stored_block;
-exports._tr_flush_block  = _tr_flush_block;
-exports._tr_tally = _tr_tally;
-exports._tr_align = _tr_align;
+export {
+  _tr_init,
+  _tr_stored_block,
+  _tr_flush_block,
+  _tr_tally,
+  _tr_align
+};
+// exports._tr_init  = _tr_init;
+// exports._tr_stored_block = _tr_stored_block;
+// exports._tr_flush_block  = _tr_flush_block;
+// exports._tr_tally = _tr_tally;
+// exports._tr_align = _tr_align;

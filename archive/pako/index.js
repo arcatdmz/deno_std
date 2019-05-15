@@ -2,9 +2,9 @@
 
 import { assign } from "./lib/utils/common.js";
 
-import deflate from "./lib/deflate.js";
-import inflate from "./lib/inflate.js";
-import constants from "./lib/zlib/constants.js";
+import * as deflate from "./lib/deflate.js";
+import * as inflate from "./lib/inflate.js";
+import * as constants from "./lib/zlib/constants.js";
 
 let pako = {};
 

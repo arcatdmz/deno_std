@@ -56,7 +56,7 @@ var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
       requires strm.avail_out >= 258 for each loop to avoid checking for
       output space.
  */
-module.exports = function inflate_fast(strm, start) {
+function inflate_fast(strm, start) {
   var state;
   var _in;                    /* local strm.input */
   var last;                   /* have enough input while in < last */
@@ -341,3 +341,5 @@ module.exports = function inflate_fast(strm, start) {
   state.bits = bits;
   return;
 };
+
+export default inflate_fast;

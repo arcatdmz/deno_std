@@ -17,7 +17,7 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-import utils from "../utils/common.js";
+import * as utils from "../utils/common.js";
 
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;
@@ -50,7 +50,7 @@ var dext = [ /* Distance codes 0..29 extra */
   28, 28, 29, 29, 64, 64
 ];
 
-module.exports = function inflate_table(type, lens, lens_index, codes, table, table_index, work, opts)
+function inflate_table(type, lens, lens_index, codes, table, table_index, work, opts)
 {
   var bits = opts.bits;
       //here = opts.here; /* table entry for duplication */
@@ -339,3 +339,5 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
   opts.bits = root;
   return 0;
 };
+
+export default inflate_table;

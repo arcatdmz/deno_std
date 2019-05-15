@@ -46,4 +46,4 @@ function adler32(adler, buf, len, pos) {
 }
 
 
-module.exports = adler32;
+export default adler32;

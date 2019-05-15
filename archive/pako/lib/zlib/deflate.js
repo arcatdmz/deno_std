@@ -17,8 +17,8 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-import utils   from "../utils/common.js";
-import trees   from "./trees.js";
+import * as utils from "../utils/common.js";
+import * as trees from "./trees.js";
 import adler32 from "./adler32.js";
 import crc32   from "./crc32.js";
 import msg     from "./messages.js";
@@ -1852,15 +1852,27 @@ function deflateSetDictionary(strm, dictionary) {
 }
 
 
-exports.deflateInit = deflateInit;
-exports.deflateInit2 = deflateInit2;
-exports.deflateReset = deflateReset;
-exports.deflateResetKeep = deflateResetKeep;
-exports.deflateSetHeader = deflateSetHeader;
-exports.deflate = deflate;
-exports.deflateEnd = deflateEnd;
-exports.deflateSetDictionary = deflateSetDictionary;
-exports.deflateInfo = 'pako deflate (from Nodeca project)';
+const deflateInfo = 'pako deflate (from Nodeca project)';
+export {
+  deflateInit,
+  deflateInit2,
+  deflateReset,
+  deflateResetKeep,
+  deflateSetHeader,
+  deflate,
+  deflateEnd,
+  deflateSetDictionary,
+  deflateInfo
+}
+// exports.deflateInit = deflateInit;
+// exports.deflateInit2 = deflateInit2;
+// exports.deflateReset = deflateReset;
+// exports.deflateResetKeep = deflateResetKeep;
+// exports.deflateSetHeader = deflateSetHeader;
+// exports.deflate = deflate;
+// exports.deflateEnd = deflateEnd;
+// exports.deflateSetDictionary = deflateSetDictionary;
+// exports.deflateInfo = 'pako deflate (from Nodeca project)';
 
 /* Not implemented
 exports.deflateBound = deflateBound;

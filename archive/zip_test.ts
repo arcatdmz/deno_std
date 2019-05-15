@@ -9,7 +9,7 @@ import pako from "./pako/index.js";
 test(async function inflateAndDeflate(): Promise<void> {
   const inputString = "hello tar world!";
   const input = new TextEncoder().encode(inputString);
-  const inflated = pako.inflate(input)
+  const inflated = pako.inflate(input);
   const deflated = pako.deflate(inflated);
   const outputString = new TextDecoder("utf-8").decode(deflated);
   assertEquals(inputString, outputString);

@@ -53,4 +53,4 @@ function GZheader() {
   this.done       = false;
 }
 
-module.exports = GZheader;
+export default GZheader;
