@@ -1,11 +1,8 @@
-'use strict';
-
-
-var zlib_deflate = require('./zlib/deflate');
-var utils        = require('./utils/common');
-var strings      = require('./utils/strings');
-var msg          = require('./zlib/messages');
-var ZStream      = require('./zlib/zstream');
+import zlib_deflate from "./zlib/deflate.js";
+import utils        from "./utils/common.js";
+import strings      from "./utils/strings.js";
+import msg          from "./zlib/messages.js";
+import ZStream      from "./zlib/zstream.js";
 
 var toString = Object.prototype.toString;
 

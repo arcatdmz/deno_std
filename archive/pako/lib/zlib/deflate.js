@@ -1,5 +1,3 @@
-'use strict';
-
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
 // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
 //
@@ -19,11 +17,11 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils   = require('../utils/common');
-var trees   = require('./trees');
-var adler32 = require('./adler32');
-var crc32   = require('./crc32');
-var msg     = require('./messages');
+import utils   from "../utils/common.js";
+import trees   from "./trees.js";
+import adler32 from "./adler32.js";
+import crc32   from "./crc32.js";
+import msg     from "./messages.js";
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/

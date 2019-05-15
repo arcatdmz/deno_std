@@ -12,8 +12,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.prettier = factory());
-}(globalThis, (function () { 'use strict';
-
+}(globalThis, (function () { 
 var name = "prettier";
 var version$1 = "1.17.1";
 var description = "Prettier is an opinionated code formatter";
@@ -193,8 +192,7 @@ function createCommonjsModule(fn, module) {
 
 var base = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports['default'] =
   /*istanbul ignore end*/
@@ -492,8 +490,7 @@ unwrapExports(base);
 
 var character = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.characterDiff = undefined;
   exports.
@@ -527,8 +524,7 @@ unwrapExports(character);
 
 var params = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.
   /*istanbul ignore end*/
@@ -553,8 +549,7 @@ unwrapExports(params);
 
 var word = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.wordDiff = undefined;
   exports.
@@ -647,8 +642,7 @@ unwrapExports(word);
 
 var line = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.lineDiff = undefined;
   exports.
@@ -728,8 +722,7 @@ unwrapExports(line);
 
 var sentence = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.sentenceDiff = undefined;
   exports.
@@ -767,8 +760,7 @@ unwrapExports(sentence);
 
 var css = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.cssDiff = undefined;
   exports.
@@ -1245,8 +1237,7 @@ function _optionalCallableProperty(obj, name) {
 
 var json = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.jsonDiff = undefined;
 
@@ -1401,8 +1392,7 @@ unwrapExports(json);
 
 var array = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.arrayDiff = undefined;
   exports.
@@ -1440,8 +1430,7 @@ unwrapExports(array);
 
 var parse = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.
   /*istanbul ignore end*/
@@ -1643,8 +1632,7 @@ unwrapExports(distanceIterator);
 
 var apply = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.
   /*istanbul ignore end*/
@@ -1865,8 +1853,7 @@ unwrapExports(apply);
 
 var create = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.
   /*istanbul ignore end*/
@@ -2154,8 +2141,7 @@ unwrapExports(dmp);
 
 var xml = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.
   /*istanbul ignore end*/
@@ -2198,8 +2184,7 @@ unwrapExports(xml);
 
 var lib = createCommonjsModule(function (module, exports) {
   /*istanbul ignore start*/
-  'use strict';
-
+  
   exports.__esModule = true;
   exports.canonicalize = exports.convertChangesToXML = exports.convertChangesToDMP = exports.parsePatch = exports.applyPatches = exports.applyPatch = exports.createPatch = exports.createTwoFilesPatch = exports.structuredPatch = exports.diffArrays = exports.diffJson = exports.diffCss = exports.diffSentences = exports.diffTrimmedLines = exports.diffLines = exports.diffWordsWithSpace = exports.diffWords = exports.diffChars = exports.Diff = undefined;
   /*istanbul ignore end*/
@@ -8258,8 +8243,7 @@ models.forEach(function (fromModel) {
 var colorConvert = convert;
 
 var ansiStyles = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var wrapAnsi16 = function wrapAnsi16(fn, offset) {
     return function () {
       var code = fn.apply(colorConvert, arguments);
@@ -8445,8 +8429,7 @@ var os$1 = Object.freeze({
 });
 
 var hasFlag = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   module.exports = function (flag, argv$$1) {
     argv$$1 = argv$$1 || process.argv;
     var prefix = flag.startsWith('-') ? '' : flag.length === 1 ? '-' : '--';
@@ -8581,8 +8564,7 @@ var supportsColor_1 = {
 };
 
 var templates = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var TEMPLATE_REGEX = /(?:\\(u[a-f\d]{4}|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
   var STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
   var STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
@@ -8767,8 +8749,7 @@ var templates = createCommonjsModule(function (module) {
 });
 
 var chalk = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var stdoutColor = supportsColor_1.stdout;
   var isSimpleWindowsTerm = process.platform === 'win32' && !(process.env.TERM || '').toLowerCase().startsWith('xterm'); // `supportsColor.level` → `ansiStyles.color[name]` mapping
 
@@ -10457,8 +10438,7 @@ var hasFlag$3 = function hasFlag(flag, argv$$1) {
 };
 
 var supportsColor$1 = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var env$$1 = process.env;
 
   var support = function support(level) {
@@ -10567,8 +10547,7 @@ var supportsColor$1 = createCommonjsModule(function (module) {
 });
 
 var templates$2 = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var TEMPLATE_REGEX = /(?:\\(u[a-f0-9]{4}|x[a-f0-9]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
   var STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
   var STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
@@ -11387,8 +11366,7 @@ var ast = createCommonjsModule(function (module) {
     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
   (function () {
-    'use strict';
-
+    
     function isExpression(node) {
       if (node == null) {
         return false;
@@ -11552,8 +11530,7 @@ var code = createCommonjsModule(function (module) {
     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
   (function () {
-    'use strict';
-
+    
     var ES6Regex, ES5Regex, NON_ASCII_WHITESPACES, IDENTIFIER_START, IDENTIFIER_PART, ch; // See `tools/generate-identifier-regex.js`.
 
     ES5Regex = {
@@ -11680,8 +11657,7 @@ var keyword = createCommonjsModule(function (module) {
     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
   (function () {
-    'use strict';
-
+    
     var code$$1 = code;
 
     function isStrictModeReservedWordES6(id) {
@@ -11872,8 +11848,7 @@ var utils$2 = createCommonjsModule(function (module, exports) {
     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
   (function () {
-    'use strict';
-
+    
     exports.ast = ast;
     exports.code = code;
     exports.keyword = keyword;
@@ -11883,8 +11858,7 @@ var utils$2 = createCommonjsModule(function (module, exports) {
 });
 
 var hasFlag$6 = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   module.exports = function (flag, argv$$1) {
     argv$$1 = argv$$1 || process.argv;
     var prefix = flag.startsWith('-') ? '' : flag.length === 1 ? '-' : '--';
@@ -12017,8 +11991,7 @@ var supportsColor_1$3 = {
 };
 
 var templates$4 = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var TEMPLATE_REGEX = /(?:\\(u[a-f\d]{4}|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
   var STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
   var STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
@@ -12203,8 +12176,7 @@ var templates$4 = createCommonjsModule(function (module) {
 });
 
 var chalk$5 = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var stdoutColor = supportsColor_1$3.stdout;
   var isSimpleWindowsTerm = process.platform === 'win32' && !(process.env.TERM || '').toLowerCase().startsWith('xterm'); // `supportsColor.level` → `ansiStyles.color[name]` mapping
 
@@ -13356,8 +13328,7 @@ var docBuilders = {
 };
 
 var ansiRegex = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   module.exports = function (options) {
     options = Object.assign({
       onlyFirst: false
@@ -13372,8 +13343,7 @@ var stripAnsi = function stripAnsi(input) {
 };
 
 var isFullwidthCodePoint = createCommonjsModule(function (module) {
-  'use strict';
-  /* eslint-disable yoda */
+    /* eslint-disable yoda */
 
   module.exports = function (x) {
     if (Number.isNaN(x)) {
@@ -13411,8 +13381,7 @@ var emojiRegex = function emojiRegex() {
 };
 
 var stringWidth = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   var emojiRegex$$1 = emojiRegex();
 
   module.exports = function (input) {
@@ -16648,8 +16617,7 @@ function embed(path, print, textToDoc
 var embed_1 = embed;
 
 var detectNewline = createCommonjsModule(function (module) {
-  'use strict';
-
+  
   module.exports = function (str) {
     if (typeof str !== 'string') {
       throw new TypeError('Expected a string');
@@ -16674,8 +16642,7 @@ var detectNewline = createCommonjsModule(function (module) {
 });
 
 var build$1 = createCommonjsModule(function (module, exports) {
-  'use strict';
-
+  
   Object.defineProperty(exports, '__esModule', {
     value: true
   });

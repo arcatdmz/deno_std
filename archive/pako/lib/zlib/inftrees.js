@@ -1,5 +1,3 @@
-'use strict';
-
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
 // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
 //
@@ -19,7 +17,7 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils = require('../utils/common');
+import utils from "../utils/common.js";
 
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;

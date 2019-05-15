@@ -1,14 +1,13 @@
 // Top level file is just a mixin of submodules & constants
-'use strict';
 
-var assign    = require('./lib/utils/common').assign;
+import { assign } from "./lib/utils/common.js";
 
-var deflate   = require('./lib/deflate');
-var inflate   = require('./lib/inflate');
-var constants = require('./lib/zlib/constants');
+import deflate from "./lib/deflate.js";
+import inflate from "./lib/inflate.js";
+import constants from "./lib/zlib/constants.js";
 
-var pako = {};
+let pako = {};
 
 assign(pako, deflate, inflate, constants);
 
-module.exports = pako;
+export default pako;

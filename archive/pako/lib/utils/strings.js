@@ -1,8 +1,5 @@
 // String encode/decode helpers
-'use strict';
-
-
-var utils = require('./common');
+import utils from "./common.js";
 
 
 // Quick check if we can use fast array to bin string conversion

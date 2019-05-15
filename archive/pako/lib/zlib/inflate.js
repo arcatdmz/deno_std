@@ -1,5 +1,3 @@
-'use strict';
-
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
 // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
 //
@@ -19,11 +17,11 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils         = require('../utils/common');
-var adler32       = require('./adler32');
-var crc32         = require('./crc32');
-var inflate_fast  = require('./inffast');
-var inflate_table = require('./inftrees');
+import utils         from "../utils/common.js";
+import adler32       from "./adler32.js";
+import crc32         from "./crc32.js";
+import inflate_fast  from "./inffast.js";
+import inflate_table from "./inftrees.js";
 
 var CODES = 0;
 var LENS = 1;

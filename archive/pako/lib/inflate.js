@@ -1,13 +1,10 @@
-'use strict';
-
-
-var zlib_inflate = require('./zlib/inflate');
-var utils        = require('./utils/common');
-var strings      = require('./utils/strings');
-var c            = require('./zlib/constants');
-var msg          = require('./zlib/messages');
-var ZStream      = require('./zlib/zstream');
-var GZheader     = require('./zlib/gzheader');
+import zlib_inflate from "./zlib/inflate.js";
+import utils        from "./utils/common.js";
+import strings      from "./utils/strings.js";
+import c            from "./zlib/constants.js";
+import msg          from "./zlib/messages.js";
+import ZStream      from "./zlib/zstream.js";
+import GZheader     from "./zlib/gzheader.js";
 
 var toString = Object.prototype.toString;
 
