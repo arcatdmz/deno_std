@@ -159,14 +159,14 @@ function InflateState() {
   this.have = 0;              /* number of code lengths in lens[] */
   this.next = null;              /* next available space in codes[] */
 
-  this.lens = new utils.Buf16(320); /* temporary storage for code lengths */
-  this.work = new utils.Buf16(288); /* work area for code table building */
+  this.lens = new Uint16Array(320); /* temporary storage for code lengths */
+  this.work = new Uint16Array(288); /* work area for code table building */
 
   /*
    because we don't have pointers in js, we use lencode and distcode directly
    as buffers so we don't need codes
   */
-  //this.codes = new utils.Buf32(ENOUGH);       /* space for code tables */
+  //this.codes = new Uint32Array(ENOUGH);       /* space for code tables */
   this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
   this.distdyn = null;             /* dynamic table for distance codes (JS specific) */
   this.sane = 0;                   /* if false, allow invalid distance too far */
@@ -192,8 +192,8 @@ function inflateResetKeep(strm) {
   state.hold = 0;
   state.bits = 0;
   //state.lencode = state.distcode = state.next = state.codes;
-  state.lencode = state.lendyn = new utils.Buf32(ENOUGH_LENS);
-  state.distcode = state.distdyn = new utils.Buf32(ENOUGH_DISTS);
+  state.lencode = state.lendyn = new Uint32Array(ENOUGH_LENS);
+  state.distcode = state.distdyn = new Uint32Array(ENOUGH_DISTS);
 
   state.sane = 1;
   state.back = -1;
@@ -291,8 +291,8 @@ function fixedtables(state) {
   if (virgin) {
     var sym;
 
-    lenfix = new utils.Buf32(512);
-    distfix = new utils.Buf32(32);
+    lenfix = new Uint32Array(512);
+    distfix = new Uint32Array(32);
 
     /* literal/length table */
     sym = 0;
@@ -344,7 +344,7 @@ function updatewindow(strm, src, end, copy) {
     state.wnext = 0;
     state.whave = 0;
 
-    state.window = new utils.Buf8(state.wsize);
+    state.window = new Uint8Array(state.wsize);
   }
 
   /* copy state->wsize or less output bytes into the circular window */
@@ -394,7 +394,7 @@ function inflate(strm, flush) {
   var last_bits, last_op, last_val; // paked "last" denormalized (JS specific)
   var len;                    /* length to copy for repeats, bits to drop */
   var ret;                    /* return code */
-  var hbuf = new utils.Buf8(4);    /* buffer for gzip header crc calculation */
+  var hbuf = new Uint8Array(4);    /* buffer for gzip header crc calculation */
   var opts;
 
   var n; // temporary var for NEED_BITS

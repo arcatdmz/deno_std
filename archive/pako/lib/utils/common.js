@@ -102,5 +102,4 @@ var fnTyped = {
 // const setTyped(TYPED_OK);
 
 const { arraySet, flattenChunks } = fnTyped;
-const Buf8 = Uint8Array, Buf16 = Uint16Array, Buf32 = Int32Array;
-export { assign, shrinkBuf, arraySet, flattenChunks, Buf8, Buf16, Buf32 };
+export { assign, shrinkBuf, arraySet, flattenChunks };

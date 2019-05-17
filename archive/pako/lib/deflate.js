@@ -237,7 +237,7 @@ Deflate.prototype.push = function (data, mode) {
 
   do {
     if (strm.avail_out === 0) {
-      strm.output = new utils.Buf8(chunkSize);
+      strm.output = new Uint8Array(chunkSize);
       strm.next_out = 0;
       strm.avail_out = chunkSize;
     }
