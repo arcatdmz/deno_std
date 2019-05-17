@@ -4,7 +4,7 @@
 import { test, runIfMain } from "../testing/mod.ts";
 import { assertEquals } from "../testing/asserts.ts";
 
-import pako from "./pako/index.js";
+import * as pako from "./pako/index.ts";
 
 test(async function deflateAndInflate(): Promise<void> {
   const inputString = "hello zip world!";

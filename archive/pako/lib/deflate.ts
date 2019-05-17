@@ -4,6 +4,7 @@ import * as strings from "./utils/strings.ts";
 import msg          from "./zlib/messages.ts";
 import ZStream      from "./zlib/zstream.js";
 
+type IODataType = Uint8Array | Array<any> | string;
 var toString = Object.prototype.toString;
 
 /* Public constants ==========================================================*/
@@ -32,12 +33,14 @@ var Z_DEFLATED  = 8;
  * streaming behaviour - use more simple functions: [[deflate]],
  * [[deflateRaw]] and [[gzip]].
  **/
+class Deflate<A extends IODataType>{
 
 /* internal
  * Deflate.chunks -> Array
  *
  * Chunks of output data, if [[Deflate#onData]] not overridden.
  **/
+chunks: Array<A>;
 
 /**
  * Deflate.result -> Uint8Array|Array
@@ -48,6 +51,7 @@ var Z_DEFLATED  = 8;
  * push a chunk with explicit flush (call [[Deflate#push]] with
  * `Z_SYNC_FLUSH` param).
  **/
+result: A;
 
 /**
  * Deflate.err -> Number
@@ -57,13 +61,18 @@ var Z_DEFLATED  = 8;
  * are possible only on wrong options or bad `onData` / `onEnd`
  * custom handlers.
  **/
+err: number;
 
 /**
  * Deflate.msg -> String
  *
  * Error message, if [[Deflate.err]] != 0
  **/
+msg: string;
 
+ended: boolean;
+strm: any; //ZStream;
+_dict_set: boolean;
 
 /**
  * new Deflate(options)
@@ -114,8 +123,8 @@ var Z_DEFLATED  = 8;
  * console.log(deflate.result);
  * ```
  **/
-function Deflate(options) {
-  if (!(this instanceof Deflate)) return new Deflate(options);
+constructor(public options?) {
+  if (!(this instanceof Deflate)) return new Deflate<any>(options);
 
   this.options = Object.assign({
     level: Z_DEFAULT_COMPRESSION,
@@ -213,7 +222,7 @@ function Deflate(options) {
  * push(chunk, true);  // push last chunk
  * ```
  **/
-Deflate.prototype.push = function (data, mode) {
+push(data, mode) {
   var strm = this.strm;
   var chunkSize = this.options.chunkSize;
   var status, _mode;
@@ -273,7 +282,7 @@ Deflate.prototype.push = function (data, mode) {
   }
 
   return true;
-};
+}
 
 
 /**
@@ -285,7 +294,7 @@ Deflate.prototype.push = function (data, mode) {
  * By default, stores data blocks in `chunks[]` property and glue
  * those in `onEnd`. Override this handler, if you need another behaviour.
  **/
-Deflate.prototype.onData = function (chunk) {
+onData(chunk) {
   this.chunks.push(chunk);
 };
 
@@ -300,20 +309,20 @@ Deflate.prototype.onData = function (chunk) {
  * or if an error happened. By default - join collected chunks,
  * free memory and fill `results` / `err` properties.
  **/
-Deflate.prototype.onEnd = function (status) {
+onEnd(status) {
   // On success - join
   if (status === Z_OK) {
     if (this.options.to === 'string') {
-      this.result = this.chunks.join('');
+      this.result = this.chunks.join('') as A;
     } else {
-      this.result = utils.flattenChunks(this.chunks);
+      this.result = utils.flattenChunks(this.chunks as Array<Uint8Array | Array<any>>) as A;
     }
   }
   this.chunks = [];
   this.err = status;
   this.msg = this.strm.msg;
-};
-
+}
+}
 
 /**
  * deflate(data[, options]) -> Uint8Array|Array|String
@@ -349,8 +358,8 @@ Deflate.prototype.onEnd = function (status) {
  * console.log(pako.deflate(data));
  * ```
  **/
-function deflate(input, options) {
-  var deflator = new Deflate(options);
+function deflate<A extends IODataType>(input: A, options?): A {
+  var deflator = new Deflate<A>(options);
 
   deflator.push(input, true);
 
@@ -369,7 +378,7 @@ function deflate(input, options) {
  * The same as [[deflate]], but creates raw data, without wrapper
  * (header and adler32 crc).
  **/
-function deflateRaw(input, options) {
+function deflateRaw<A extends IODataType>(input: A, options?): A {
   options = options || {};
   options.raw = true;
   return deflate(input, options);
@@ -384,7 +393,7 @@ function deflateRaw(input, options) {
  * The same as [[deflate]], but create gzip wrapper instead of
  * deflate one.
  **/
-function gzip(input, options) {
+function gzip<A extends IODataType>(input: A, options?): A {
   options = options || {};
   options.gzip = true;
   return deflate(input, options);
