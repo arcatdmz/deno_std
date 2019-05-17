@@ -1,8 +1,8 @@
 import * as zlib_inflate from "./zlib/inflate.js";
 import * as utils   from "./utils/common.ts";
 import * as strings from "./utils/strings.ts";
-import c            from "./zlib/constants.js";
-import msg          from "./zlib/messages.js";
+import c            from "./zlib/constants.ts";
+import msg          from "./zlib/messages.ts";
 import ZStream      from "./zlib/zstream.js";
 import GZheader     from "./zlib/gzheader.js";
 

@@ -21,7 +21,7 @@ import * as utils from "../utils/common.ts";
 import * as trees from "./trees.js";
 import adler32 from "./adler32.js";
 import crc32   from "./crc32.js";
-import msg     from "./messages.js";
+import msg     from "./messages.ts";
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/

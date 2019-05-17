@@ -1,7 +1,7 @@
 import * as zlib_deflate from "./zlib/deflate.js";
 import * as utils   from "./utils/common.ts";
 import * as strings from "./utils/strings.ts";
-import msg          from "./zlib/messages.js";
+import msg          from "./zlib/messages.ts";
 import ZStream      from "./zlib/zstream.js";
 
 var toString = Object.prototype.toString;
