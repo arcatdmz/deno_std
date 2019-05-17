@@ -6,7 +6,8 @@ import msg          from "./zlib/messages.ts";
 import ZStream      from "./zlib/zstream.js";
 import GZheader     from "./zlib/gzheader.js";
 
-var toString = Object.prototype.toString;
+type IODataType = Uint8Array | Array<any> | string;
+const toString = Object.prototype.toString;
 
 /**
  * class Inflate
@@ -15,12 +16,14 @@ var toString = Object.prototype.toString;
  * streaming behaviour - use more simple functions: [[inflate]]
  * and [[inflateRaw]].
  **/
+class Inflate<A extends IODataType>{
 
 /* internal
  * inflate.chunks -> Array
  *
  * Chunks of output data, if [[Inflate#onData]] not overridden.
  **/
+chunks: Array<A>;
 
 /**
  * Inflate.result -> Uint8Array|Array|String
@@ -31,6 +34,7 @@ var toString = Object.prototype.toString;
  * push a chunk with explicit flush (call [[Inflate#push]] with
  * `Z_SYNC_FLUSH` param).
  **/
+result: A;
 
 /**
  * Inflate.err -> Number
@@ -38,13 +42,18 @@ var toString = Object.prototype.toString;
  * Error code after inflate finished. 0 (Z_OK) on success.
  * Should be checked if broken data possible.
  **/
+err: number;
 
 /**
  * Inflate.msg -> String
  *
  * Error message, if [[Inflate.err]] != 0
  **/
+msg: string;
 
+ended: boolean;
+header: any; //GZheader
+strm: any; //ZStream;
 
 /**
  * new Inflate(options)
@@ -87,8 +96,8 @@ var toString = Object.prototype.toString;
  * console.log(inflate.result);
  * ```
  **/
-function Inflate(options) {
-  if (!(this instanceof Inflate)) return new Inflate(options);
+constructor(public options?) {
+  if (!(this instanceof Inflate)) return new Inflate<any>(options);
 
   this.options = Object.assign({
     chunkSize: 16384,
@@ -96,7 +105,7 @@ function Inflate(options) {
     to: ''
   }, options || {});
 
-  var opt = this.options;
+  const opt = this.options;
 
   // Force window size for `raw` data, if not set directly,
   // because we have no header for autodetect.
@@ -129,7 +138,7 @@ function Inflate(options) {
   this.strm   = new ZStream();
   this.strm.avail_out = 0;
 
-  var status  = zlib_inflate.inflateInit2(
+  let status  = zlib_inflate.inflateInit2(
     this.strm,
     opt.windowBits
   );
@@ -187,16 +196,16 @@ function Inflate(options) {
  * push(chunk, true);  // push last chunk
  * ```
  **/
-Inflate.prototype.push = function (data, mode) {
-  var strm = this.strm;
-  var chunkSize = this.options.chunkSize;
-  var dictionary = this.options.dictionary;
-  var status, _mode;
-  var next_out_utf8, tail, utf8str;
+push(data: A | ArrayBuffer, mode: number | boolean) {
+  const strm = this.strm;
+  const chunkSize = this.options.chunkSize;
+  const dictionary = this.options.dictionary;
+  let status: number, _mode: number;
+  let next_out_utf8, tail, utf8str;
 
   // Flag to properly process Z_BUF_ERROR on testing inflate call
   // when we check that all output data was flushed.
-  var allowBufError = false;
+  let allowBufError = false;
 
   if (this.ended) { return false; }
   _mode = (mode === ~~mode) ? mode : ((mode === true) ? c.Z_FINISH : c.Z_NO_FLUSH);
@@ -204,11 +213,11 @@ Inflate.prototype.push = function (data, mode) {
   // Convert data if needed
   if (typeof data === 'string') {
     // Only binary strings can be decompressed on practice
-    strm.input = strings.binstring2buf(data);
+    strm.input = strings.binstring2buf(data as string);
   } else if (toString.call(data) === '[object ArrayBuffer]') {
-    strm.input = new Uint8Array(data);
+    strm.input = new Uint8Array(data as ArrayBuffer);
   } else {
-    strm.input = data;
+    strm.input = data as Uint8Array | Array<any>;
   }
 
   strm.next_in = 0;
@@ -294,7 +303,7 @@ Inflate.prototype.push = function (data, mode) {
   }
 
   return true;
-};
+}
 
 
 /**
@@ -306,9 +315,9 @@ Inflate.prototype.push = function (data, mode) {
  * By default, stores data blocks in `chunks[]` property and glue
  * those in `onEnd`. Override this handler, if you need another behaviour.
  **/
-Inflate.prototype.onData = function (chunk) {
+onData(chunk: A) {
   this.chunks.push(chunk);
-};
+}
 
 
 /**
@@ -321,22 +330,22 @@ Inflate.prototype.onData = function (chunk) {
  * or if an error happened. By default - join collected chunks,
  * free memory and fill `results` / `err` properties.
  **/
-Inflate.prototype.onEnd = function (status) {
+onEnd(status: number) {
   // On success - join
   if (status === c.Z_OK) {
     if (this.options.to === 'string') {
       // Glue & convert here, until we teach pako to send
       // utf8 aligned strings to onData
-      this.result = this.chunks.join('');
+      this.result = this.chunks.join('') as A;
     } else {
-      this.result = utils.flattenChunks(this.chunks);
+      this.result = utils.flattenChunks(this.chunks as Array<Uint8Array | Array<any>>) as A;
     }
   }
   this.chunks = [];
   this.err = status;
   this.msg = this.strm.msg;
-};
-
+}
+}
 
 /**
  * inflate(data[, options]) -> Uint8Array|Array|String
@@ -377,8 +386,8 @@ Inflate.prototype.onEnd = function (status) {
  * }
  * ```
  **/
-function inflate(input, options) {
-  var inflator = new Inflate(options);
+function inflate<A extends IODataType>(input: A, options?): A {
+  const inflator = new Inflate<A>(options);
 
   inflator.push(input, true);
 
@@ -397,7 +406,7 @@ function inflate(input, options) {
  * The same as [[inflate]], but creates raw data, without wrapper
  * (header and adler32 crc).
  **/
-function inflateRaw(input, options) {
+function inflateRaw<A extends IODataType>(input: A, options?): A {
   options = options || {};
   options.raw = true;
   return inflate(input, options);
