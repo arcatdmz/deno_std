@@ -5,23 +5,23 @@ import msg          from "./zlib/messages.ts";
 import ZStream      from "./zlib/zstream.js";
 
 type IODataType = Uint8Array | Array<any> | string;
-var toString = Object.prototype.toString;
+const toString = Object.prototype.toString;
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
 
-var Z_NO_FLUSH      = 0;
-var Z_FINISH        = 4;
+const Z_NO_FLUSH      = 0;
+const Z_FINISH        = 4;
 
-var Z_OK            = 0;
-var Z_STREAM_END    = 1;
-var Z_SYNC_FLUSH    = 2;
+const Z_OK            = 0;
+const Z_STREAM_END    = 1;
+const Z_SYNC_FLUSH    = 2;
 
-var Z_DEFAULT_COMPRESSION = -1;
+const Z_DEFAULT_COMPRESSION = -1;
 
-var Z_DEFAULT_STRATEGY    = 0;
+const Z_DEFAULT_STRATEGY    = 0;
 
-var Z_DEFLATED  = 8;
+const Z_DEFLATED  = 8;
 
 /* ===========================================================================*/
 
@@ -136,7 +136,7 @@ constructor(public options?) {
     to: ''
   }, options || {});
 
-  var opt = this.options;
+  const opt = this.options;
 
   if (opt.raw && (opt.windowBits > 0)) {
     opt.windowBits = -opt.windowBits;
@@ -154,7 +154,7 @@ constructor(public options?) {
   this.strm = new ZStream();
   this.strm.avail_out = 0;
 
-  var status = zlib_deflate.deflateInit2(
+  let status = zlib_deflate.deflateInit2(
     this.strm,
     opt.level,
     opt.method,
@@ -172,7 +172,7 @@ constructor(public options?) {
   }
 
   if (opt.dictionary) {
-    var dict;
+    let dict;
     // Convert data if needed
     if (typeof opt.dictionary === 'string') {
       // If we need to compress text, change encoding to utf8.
@@ -222,10 +222,10 @@ constructor(public options?) {
  * push(chunk, true);  // push last chunk
  * ```
  **/
-push(data, mode) {
-  var strm = this.strm;
-  var chunkSize = this.options.chunkSize;
-  var status, _mode;
+push(data: A | ArrayBuffer, mode: number | boolean) {
+  const strm = this.strm;
+  const chunkSize = this.options.chunkSize;
+  let status: number, _mode: number;
 
   if (this.ended) { return false; }
 
@@ -234,11 +234,11 @@ push(data, mode) {
   // Convert data if needed
   if (typeof data === 'string') {
     // If we need to compress text, change encoding to utf8.
-    strm.input = strings.string2buf(data);
+    strm.input = strings.string2buf(data as string);
   } else if (toString.call(data) === '[object ArrayBuffer]') {
-    strm.input = new Uint8Array(data);
+    strm.input = new Uint8Array(data as ArrayBuffer);
   } else {
-    strm.input = data;
+    strm.input = data as Uint8Array | Array<any>;
   }
 
   strm.next_in = 0;
@@ -259,7 +259,7 @@ push(data, mode) {
     }
     if (strm.avail_out === 0 || (strm.avail_in === 0 && (_mode === Z_FINISH || _mode === Z_SYNC_FLUSH))) {
       if (this.options.to === 'string') {
-        this.onData(strings.buf2binstring(utils.shrinkBuf(strm.output, strm.next_out)));
+        this.onData(strings.buf2binstring(utils.shrinkBuf(strm.output, strm.next_out)) as A);
       } else {
         this.onData(utils.shrinkBuf(strm.output, strm.next_out));
       }
@@ -294,9 +294,9 @@ push(data, mode) {
  * By default, stores data blocks in `chunks[]` property and glue
  * those in `onEnd`. Override this handler, if you need another behaviour.
  **/
-onData(chunk) {
+onData(chunk: A) {
   this.chunks.push(chunk);
-};
+}
 
 
 /**
@@ -309,7 +309,7 @@ onData(chunk) {
  * or if an error happened. By default - join collected chunks,
  * free memory and fill `results` / `err` properties.
  **/
-onEnd(status) {
+onEnd(status: number) {
   // On success - join
   if (status === Z_OK) {
     if (this.options.to === 'string') {
@@ -359,7 +359,7 @@ onEnd(status) {
  * ```
  **/
 function deflate<A extends IODataType>(input: A, options?): A {
-  var deflator = new Deflate<A>(options);
+  const deflator = new Deflate<A>(options);
 
   deflator.push(input, true);
 
