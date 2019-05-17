@@ -1,5 +1,5 @@
 // String encode/decode helpers
-import * as utils from "./common.js";
+import * as utils from "./common.ts";
 
 
 // Quick check if we can use fast array to bin string conversion

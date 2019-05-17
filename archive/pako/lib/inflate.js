@@ -1,5 +1,5 @@
 import * as zlib_inflate from "./zlib/inflate.js";
-import * as utils   from "./utils/common.js";
+import * as utils   from "./utils/common.ts";
 import * as strings from "./utils/strings.js";
 import c            from "./zlib/constants.js";
 import msg          from "./zlib/messages.js";

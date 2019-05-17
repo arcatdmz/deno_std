@@ -17,7 +17,7 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-import * as utils    from "../utils/common.js";
+import * as utils    from "../utils/common.ts";
 import adler32       from "./adler32.js";
 import crc32         from "./crc32.js";
 import inflate_fast  from "./inffast.js";

@@ -1,5 +1,5 @@
 import * as zlib_deflate from "./zlib/deflate.js";
-import * as utils   from "./utils/common.js";
+import * as utils   from "./utils/common.ts";
 import * as strings from "./utils/strings.js";
 import msg          from "./zlib/messages.js";
 import ZStream      from "./zlib/zstream.js";

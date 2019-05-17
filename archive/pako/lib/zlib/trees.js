@@ -19,7 +19,7 @@
 
 /* eslint-disable space-unary-ops */
 
-import * as utils from "../utils/common.js";
+import * as utils from "../utils/common.ts";
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
