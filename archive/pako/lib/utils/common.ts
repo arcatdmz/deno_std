@@ -1,13 +1,17 @@
+export type TypedArray = Uint8Array | Uint16Array | Uint32Array;
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
 // reduce buffer size, avoiding mem copy
-export function shrinkBuf(buf, size) {
+export function shrinkBuf(buf: TypedArray | Array<any>, size: number) {
   if (buf.length === size) { return buf; }
-  if (buf.subarray) { return buf.subarray(0, size); }
-  buf.length = size;
-  return buf;
+  if (Array.isArray(buf)) {
+    buf.length = size;
+    return buf;
+  }
+  return buf.subarray(0, size);
 }
 
-export function arraySet(dest, src, src_offs, len, dest_offs) {
+export function arraySet<T extends TypedArray>(dest: T, src: T, src_offs: number, len: number, dest_offs: number) {
   if (src.subarray && dest.subarray) {
     dest.set(src.subarray(src_offs, src_offs + len), dest_offs);
     return;
@@ -19,7 +23,7 @@ export function arraySet(dest, src, src_offs, len, dest_offs) {
 }
 
 // Join array of chunks to single array.
-export function flattenChunks(chunks) {
+export function flattenChunks(chunks: Uint8Array[]): Uint8Array {
   var i, l, len, pos, chunk, result;
 
   // calculate data length
