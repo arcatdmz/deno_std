@@ -1,5 +1,5 @@
 // String encode/decode helpers
-import * as utils from "./common.ts";
+import { TypedArray, shrinkBuf } from "./common.ts";
 
 
 // Quick check if we can use fast array to bin string conversion
@@ -7,8 +7,8 @@ import * as utils from "./common.ts";
 // - apply(Array) can fail on Android 2.2
 // - apply(Uint8Array) can fail on iOS 5.1 Safari
 //
-var STR_APPLY_OK = true;
-var STR_APPLY_UIA_OK = true;
+let STR_APPLY_OK = true;
+let STR_APPLY_UIA_OK = true;
 
 try { String.fromCharCode.apply(null, [ 0 ]); } catch (__) { STR_APPLY_OK = false; }
 try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APPLY_UIA_OK = false; }
@@ -17,16 +17,16 @@ try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APP
 // Table with utf8 lengths (calculated by first byte of sequence)
 // Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
 // because max possible codepoint is 0x10ffff
-var _utf8len = new Uint8Array(256);
-for (var q = 0; q < 256; q++) {
+const _utf8len = new Uint8Array(256);
+for (let q = 0; q < 256; q++) {
   _utf8len[q] = (q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1);
 }
 _utf8len[254] = _utf8len[254] = 1; // Invalid sequence start
 
 
-// convert string to array (typed, when possible)
-const string2buf = function (str) {
-  var buf, c, c2, m_pos, i, str_len = str.length, buf_len = 0;
+// convert string to array
+export function string2buf(str: string): Uint8Array {
+  let buf, c, c2, m_pos, i, str_len = str.length, buf_len = 0;
 
   // count binary size
   for (m_pos = 0; m_pos < str_len; m_pos++) {
@@ -76,21 +76,23 @@ const string2buf = function (str) {
   }
 
   return buf;
-};
+}
 
 // Helper (used in 2 places)
-function buf2binstring_(buf, len) {
+function buf2binstring_(buf: TypedArray | Array<any>, len: number): string {
+  const isArray = Array.isArray(buf);
+
   // On Chrome, the arguments in a function call that are allowed is `65534`.
   // If the length of the buffer is smaller than that, we can use this optimization,
   // otherwise we will take a slower path.
   if (len < 65534) {
-    if ((buf.subarray && STR_APPLY_UIA_OK) || (!buf.subarray && STR_APPLY_OK)) {
-      return String.fromCharCode.apply(null, utils.shrinkBuf(buf, len));
+    if ((!isArray && STR_APPLY_UIA_OK) || (isArray && STR_APPLY_OK)) {
+      return String.fromCharCode.apply(null, shrinkBuf(buf, len));
     }
   }
 
-  var result = '';
-  for (var i = 0; i < len; i++) {
+  let result = '';
+  for (let i = 0; i < len; i++) {
     result += String.fromCharCode(buf[i]);
   }
   return result;
@@ -98,30 +100,30 @@ function buf2binstring_(buf, len) {
 
 
 // Convert byte array to binary string
-const buf2binstring = function (buf) {
+export function buf2binstring(buf: Uint8Array): string {
   return buf2binstring_(buf, buf.length);
-};
+}
 
 
-// Convert binary string (typed, when possible)
-const binstring2buf = function (str) {
-  var buf = new Uint8Array(str.length);
+// Convert binary string
+export function binstring2buf(str: string): Uint8Array {
+  const buf = new Uint8Array(str.length);
   for (var i = 0, len = buf.length; i < len; i++) {
     buf[i] = str.charCodeAt(i);
   }
   return buf;
-};
+}
 
 
 // convert array to string
-const buf2string = function (buf, max) {
-  var i, out, c, c_len;
-  var len = max || buf.length;
+export function buf2string(buf: Uint8Array, max: number): string {
+  let i, out, c, c_len;
+  let len = max || buf.length;
 
   // Reserve max possible length (2 words per char)
   // NB: by unknown reasons, Array is significantly faster for
   //     String.fromCharCode.apply than Uint16Array.
-  var utf16buf = new Array(len * 2);
+  const utf16buf = new Array(len * 2);
 
   for (out = 0, i = 0; i < len;) {
     c = buf[i++];
@@ -153,7 +155,7 @@ const buf2string = function (buf, max) {
   }
 
   return buf2binstring_(utf16buf, out);
-};
+}
 
 
 // Calculate max possible position in utf8 buffer,
@@ -162,8 +164,8 @@ const buf2string = function (buf, max) {
 //
 // buf[] - utf8 bytes array
 // max   - length limit (mandatory);
-const utf8border = function (buf, max) {
-  var pos;
+export function utf8border(buf: Uint8Array, max: number): number {
+  let pos;
 
   max = max || buf.length;
   if (max > buf.length) { max = buf.length; }
@@ -181,6 +183,4 @@ const utf8border = function (buf, max) {
   if (pos === 0) { return max; }
 
   return (pos + _utf8len[buf[pos]] > max) ? pos : max;
-};
-
-export { string2buf, buf2binstring, binstring2buf, buf2string, utf8border };
+}
