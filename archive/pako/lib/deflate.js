@@ -117,7 +117,7 @@ var Z_DEFLATED  = 8;
 function Deflate(options) {
   if (!(this instanceof Deflate)) return new Deflate(options);
 
-  this.options = utils.assign({
+  this.options = Object.assign({
     level: Z_DEFAULT_COMPRESSION,
     method: Z_DEFLATED,
     chunkSize: 16384,

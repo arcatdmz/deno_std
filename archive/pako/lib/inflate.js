@@ -90,7 +90,7 @@ var toString = Object.prototype.toString;
 function Inflate(options) {
   if (!(this instanceof Inflate)) return new Inflate(options);
 
-  this.options = utils.assign({
+  this.options = Object.assign({
     chunkSize: 16384,
     windowBits: 0,
     to: ''

@@ -17,8 +17,6 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-import * as utils from "../utils/common.js";
-
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;
 var ENOUGH_DISTS = 592;

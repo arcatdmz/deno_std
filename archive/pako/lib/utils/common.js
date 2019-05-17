@@ -2,30 +2,6 @@
 //                 (typeof Uint16Array !== 'undefined') &&
 //                 (typeof Int32Array !== 'undefined');
 
-function _has(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
-
-const assign = function (obj /*from1, from2, from3, ...*/) {
-  var sources = Array.prototype.slice.call(arguments, 1);
-  while (sources.length) {
-    var source = sources.shift();
-    if (!source) { continue; }
-
-    if (typeof source !== 'object') {
-      throw new TypeError(source + 'must be non-object');
-    }
-
-    for (var p in source) {
-      if (_has(source, p)) {
-        obj[p] = source[p];
-      }
-    }
-  }
-
-  return obj;
-};
-
 
 // reduce buffer size, avoiding mem copy
 const shrinkBuf = function (buf, size) {
@@ -102,4 +78,4 @@ var fnTyped = {
 // const setTyped(TYPED_OK);
 
 const { arraySet, flattenChunks } = fnTyped;
-export { assign, shrinkBuf, arraySet, flattenChunks };
+export { shrinkBuf, arraySet, flattenChunks };
